@@ -23,8 +23,7 @@
                 </div>
                 <div class="price">
                     @if (product.discount === 0) {
-                    <!-- Pipe approach: In this example "currency" pipe handles the currency
-                    formatting, decimal point and etc..  -->
+                    <!-- Pipe approach: In this example "currency" pipe handles the currency formatting, decimal point and etc..  -->
                     <!-- <div>{{ product?.price | currency:'GBP' }}</div> -->
                     }
 
@@ -32,9 +31,13 @@
                     <!-- <div [class.striketrough]="product.discount > 0">
                         {{ product?.price | currency:'GBP' }}
                     </div> -->
-                    
+
                     <!-- Following example are dynamic css class binding -->
-                    <div [ngClass]="{striketrough: product.discount > 0}">
+                    <!-- <div [ngClass]="{striketrough: product.discount > 0}">
+                        {{ product?.price | currency:'GBP' }}
+                    </div> -->
+
+                    <div class="bold" [ngClass]="getDiscountedClasses(product)">
                         {{ product?.price | currency:'GBP' }}
                     </div>
 
