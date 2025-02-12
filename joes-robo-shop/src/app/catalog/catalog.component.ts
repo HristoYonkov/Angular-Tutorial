@@ -203,4 +203,11 @@ export class CatalogComponent {
       ? this.products
       : this.products.filter((product: any) => product.category === this.filter);
   }
+
+  getDiscountedClasses(product: IProduct) {
+    // We can return array of classes.
+    // if (product.discount > 0) return ['striketrough', 'bold'];
+    if (product.discount > 0) return 'striketrough';
+    else return '';
+  }
 }
