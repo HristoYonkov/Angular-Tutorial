@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+.bold {
+    font-weight: bold;
+}
+
+.red {
+    color: red;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
