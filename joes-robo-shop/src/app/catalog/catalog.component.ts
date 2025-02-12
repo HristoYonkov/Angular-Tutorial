@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { IProduct } from './product.model';
-import { CurrencyPipe, NgClass} from '@angular/common';
+import { CurrencyPipe, NgClass, NgStyle } from '@angular/common';
 
 // We can add directly styles into the decorator but usually we want this for
 // smaller components.
 @Component({
   selector: 'bot-catalog',
-  imports: [CurrencyPipe, NgClass],
+  imports: [CurrencyPipe, NgClass, NgStyle],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css',
   // styles: ['a {font-weight: bold;}']
@@ -192,6 +192,12 @@ export class CatalogComponent {
 
   products: any;
   filter: string = '';
+  cart: IProduct[] = [];
+
+  addToCart(product: IProduct) {
+    this.cart.push(product);
+    console.log(`Product: ${product.name} added to cart.`);
+  }
 
   getImageUrl(product: IProduct) {
     if (!product) return '';
