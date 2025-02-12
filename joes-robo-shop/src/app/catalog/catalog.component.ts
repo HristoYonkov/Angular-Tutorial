@@ -192,28 +192,13 @@ export class CatalogComponent {
 
   products: any;
   filter: string = '';
-  cart: IProduct[] = [];
 
   addToCart(product: IProduct) {
-    this.cart.push(product);
-    console.log(`Product: "${product.name}" added to cart.`);
-  }
-
-  getImageUrl(product: IProduct) {
-    if (!product) return '';
-    return '/assets/images/robot-parts/' + product.imageName;
   }
 
   getsetFilteredProducts() {
     return this.filter === ''
       ? this.products
       : this.products.filter((product: any) => product.category === this.filter);
-  }
-
-  getDiscountedClasses(product: IProduct) {
-    // We can return array of classes.
-    // if (product.discount > 0) return ['striketrough', 'bold'];
-    if (product.discount > 0) return 'striketrough';
-    else return '';
   }
 }
