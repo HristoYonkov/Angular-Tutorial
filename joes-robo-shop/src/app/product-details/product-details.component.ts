@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IProduct } from '../catalog/product.model';
 import { CurrencyPipe, NgClass, NgStyle } from '@angular/common';
 
@@ -10,17 +10,18 @@ import { CurrencyPipe, NgClass, NgStyle } from '@angular/common';
 })
 export class ProductDetailsComponent {
 
-  product: IProduct;
+  @Input() product!: IProduct;
+  @Output() buy = new EventEmitter();
 
-  addToCart(product: IProduct) {
-    console.log(`Product: ${product.name} added to cart.`);
+  buyButtonClicked() {
+    this.buy.emit();
   }
 
   getImageUrl(product: IProduct) {
     if (!product) return '';
     return '/assets/images/robot-parts/' + product.imageName;
   }
-  
+
   getDiscountedClasses(product: IProduct) {
     // We can return array of classes.
     // if (product.discount > 0) return ['striketrough', 'bold'];
