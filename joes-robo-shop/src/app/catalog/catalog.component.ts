@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IProduct } from './product.model';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
+import { CartService } from '../cart.service';
 
 // We can add directly styles into the decorator but usually we want this for
 // smaller components.
@@ -12,7 +13,13 @@ import { ProductDetailsComponent } from '../product-details/product-details.comp
   // styles: ['a {font-weight: bold;}']
 })
 export class CatalogComponent {
-  constructor() {
+  // Other way to add service.. But there is a drawback when it comes to testing..
+  // you could get limited to how those tests getting written. So use constructor way. 
+  // private cartServ: CartService = inject(CartService);
+  products: any;
+  filter: string = '';
+
+  constructor(private cartServ: CartService) {
     this.products = [
       {
         id: 1,
@@ -190,10 +197,8 @@ export class CatalogComponent {
     ];
   }
 
-  products: any;
-  filter: string = '';
-
   addToCart(product: IProduct) {
+    this.cartServ.add(product);
   }
 
   getsetFilteredProducts() {
