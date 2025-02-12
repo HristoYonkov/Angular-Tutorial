@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { IProduct } from './product.model';
+import { CurrencyPipe, NgClass} from '@angular/common';
 
+// We can add directly styles into the decorator but usually we want this for
+// smaller components.
 @Component({
   selector: 'bot-catalog',
-  imports: [],
+  imports: [CurrencyPipe, NgClass],
   templateUrl: './catalog.component.html',
-  styleUrl: './catalog.component.css'
+  styleUrl: './catalog.component.css',
+  // styles: ['a {font-weight: bold;}']
 })
 export class CatalogComponent {
   constructor() {
@@ -186,16 +190,17 @@ export class CatalogComponent {
     ];
   }
 
-  products: IProduct[];
+  products: any;
   filter: string = '';
 
   getImageUrl(product: IProduct) {
+    if (!product) return '';
     return '/assets/images/robot-parts/' + product.imageName;
   }
 
   getsetFilteredProducts() {
     return this.filter === ''
       ? this.products
-      : this.products.filter((product) => product.category === this.filter);
+      : this.products.filter((product: any) => product.category === this.filter);
   }
 }
