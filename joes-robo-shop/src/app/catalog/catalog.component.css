@@ -20,7 +20,7 @@
     color: white;
     background-color: rgb(92, 173, 209);
 }
-.filters .button:last-child {
+a.active {
     border-bottom: 4px solid rgb(210, 92, 160);
 }
 
