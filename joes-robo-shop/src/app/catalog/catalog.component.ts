@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { IProduct } from './product.model';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
-import { CartService } from '../cart.service';
+import { CartService } from '../cart/cart.service';
 import { ProductService } from './product.service';
 
 // We can add directly styles into the decorator but usually we want this for
