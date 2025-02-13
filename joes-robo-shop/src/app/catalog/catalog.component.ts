@@ -3,13 +3,13 @@ import { IProduct } from './product.model';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 import { CartService } from '../cart/cart.service';
 import { ProductService } from './product.service';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 
 // We can add directly styles into the decorator but usually we want this for
 // smaller components.
 @Component({
   selector: 'bot-catalog',
-  imports: [ProductDetailsComponent, RouterLink],
+  imports: [ProductDetailsComponent, RouterLink, RouterLinkActive],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css',
   // styles: ['a {font-weight: bold;}']
@@ -32,7 +32,7 @@ export class CatalogComponent {
     this.productSvc.getProducts().subscribe(products => {
       this.products = products;
     })
-    this.route.params.subscribe((params) => {
+    this.route.queryParams.subscribe((params) => {
       this.filter = params['filter'] ?? '';
     });
   }
