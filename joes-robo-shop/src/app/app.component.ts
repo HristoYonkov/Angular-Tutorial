@@ -7,7 +7,12 @@ import { SiteHeaderComponent } from './site-header/site-header.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HomeComponent, CatalogComponent, SiteHeaderComponent],
+  imports: [
+    RouterOutlet,
+    HomeComponent,
+    CatalogComponent,
+    SiteHeaderComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
