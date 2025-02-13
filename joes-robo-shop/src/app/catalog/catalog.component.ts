@@ -3,6 +3,7 @@ import { IProduct } from './product.model';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 import { CartService } from '../cart/cart.service';
 import { ProductService } from './product.service';
+import { Router } from '@angular/router';
 
 // We can add directly styles into the decorator but usually we want this for
 // smaller components.
@@ -22,7 +23,8 @@ export class CatalogComponent {
 
   constructor(
     private cartServ: CartService,
-    private productSvc: ProductService
+    private productSvc: ProductService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -33,6 +35,7 @@ export class CatalogComponent {
 
   addToCart(product: IProduct) {
     this.cartServ.add(product);
+    this.router.navigate(['/cart'])
   }
 
   getsetFilteredProducts() {
