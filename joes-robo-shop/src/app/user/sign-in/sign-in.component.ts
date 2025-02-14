@@ -11,13 +11,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent {
-  credentials: IUserCredentials = { email: '', password: '' }
-  
-  constructor(private userService: UserService, private router: Router) { }
+  credentials: IUserCredentials = { email: '', password: '' };
+  signInError: boolean = false;
+
+  constructor(private userService: UserService, private router: Router) { };
   
   signIn() {
+    this.signInError = false;
+
     this.userService.signIn(this.credentials).subscribe( {
-      next: () => this.router.navigate(['/catalog'])
+      next: () => this.router.navigate(['/catalog']),
+      error: () => (this.signInError = true)
     })
   }
 }
