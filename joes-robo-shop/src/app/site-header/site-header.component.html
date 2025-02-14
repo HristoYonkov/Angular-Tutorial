@@ -7,8 +7,22 @@
       <a routerLink="/cart" routerLinkActive="active">Cart</a>
     </div>
   </div>
+  @if (!user) {
   <div class="right">
     <a routerLink="sign-in" routerLinkActive="active">Sign In</a>
     <a routerLink="" class="cta">Register</a>
   </div>
+  }
+  @if (user) {
+  <div class="right">
+    <div>
+      <img src="/assets/images/profile.png" (click)="toggleSignOut()" alt="profile" />
+      @if (isSignOut) {
+      <div class="sign-out">
+        <button (click)="signOut()">Sign Out</button>
+      </div>
+      }
+    </div>
+  </div>
+  }
 </div>
