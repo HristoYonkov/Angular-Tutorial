@@ -31,7 +31,8 @@
 
     <div class="control">
       <div>
-        <input name="radioInput" type="radio" [value]="1" [(ngModel)]="radioInput" /> Radio One
+        <!-- Without binding the value, value will be string  -->
+        <input name="radioInput" type="radio" value="1" [(ngModel)]="radioInput" /> Radio One
       </div>
       <div>
         <input name="radioInput" type="radio" [value]="2" [(ngModel)]="radioInput" /> Radio Two
