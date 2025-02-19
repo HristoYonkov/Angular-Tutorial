@@ -7,6 +7,7 @@ import { IUser, IUserCredentials } from './user.model';
 @Injectable({
   providedIn: 'root',
 })
+
 export class UserService {
   private user: BehaviorSubject<IUser | null>;
 
