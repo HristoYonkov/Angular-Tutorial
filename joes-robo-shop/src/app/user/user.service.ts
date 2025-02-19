@@ -22,6 +22,7 @@ export class UserService {
   signIn(credentials: IUserCredentials): Observable<IUser> {
     return this.http
       .post<IUser>('/api/sign-in', credentials)
+      // .pipe() is needed to use operators which will transform data like map()..
       .pipe(map((user: IUser) => {
         this.user.next(user);
         return user;
