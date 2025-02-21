@@ -13,10 +13,15 @@ export class ProductsPageComponent {
   products: Product[] = [];
   total = 0;
   loading = true;
-  showProductCode = false;
+  showProductCode$ = this.store.select(
+    (state: any) => state.products.showProductCode
+  );
   errorMessage = '';
 
-  constructor(private productsService: ProductsService, private store: Store) {
+  constructor(
+    private productsService: ProductsService,
+    private store: Store
+  ) {
     this.store.subscribe((store) => console.log(store)
     )
   }
@@ -37,6 +42,7 @@ export class ProductsPageComponent {
   }
 
   toggleShowProductCode() {
-    this.showProductCode = !this.showProductCode;
+    // this.showProductCode = !this.showProductCode;
+    this.store.dispatch({ type: '[Products Page] Toggle Show Product Code' })
   }
 }
