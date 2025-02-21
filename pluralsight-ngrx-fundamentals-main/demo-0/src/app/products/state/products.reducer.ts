@@ -10,7 +10,7 @@ const initialState: ProductsState = {
 
 export const productsReducer = createReducer(
     initialState,
-    on(createAction("[Products Page] Toggle show product code"), (state) => ({
+    on(createAction("[Products Page] Toggle Show Product Code"), (state) => ({
         ...state,
         showProductCode: !state.showProductCode
     }))
