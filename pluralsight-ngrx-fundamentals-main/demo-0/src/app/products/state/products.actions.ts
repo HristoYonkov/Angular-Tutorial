@@ -23,7 +23,7 @@ export const ProductsAPIActions = createActionGroup({
         'Product Added Fail': props<{message: string}>(),
         'Product Updated Success': props<{product: Product}>(),
         'Product Updated Fail': props<{message: string}>(),
-        'Product Deleted Success': props<{product: number}>(),
+        'Product Deleted Success': props<{id: number}>(),
         'Product Deleted Fail': props<{message: string}>(),
     }
 });
