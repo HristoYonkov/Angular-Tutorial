@@ -43,7 +43,7 @@ export class ProductsPageComponent {
   }
 
   toggleShowProductCode() {
-    // this.showProductCode = !this.showProductCode;
+    // Dispatching process, phase 1
     this.store.dispatch(ProductsPageActions.toggleShowProductCode());
   }
 }
