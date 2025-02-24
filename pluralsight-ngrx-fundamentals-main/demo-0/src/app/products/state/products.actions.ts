@@ -2,7 +2,7 @@ import { createActionGroup, emptyProps, props } from "@ngrx/store";
 import { Product } from "../product.model";
 
 // Following code is for strongly typed actions.
-
+// Dispatching process, phase 2
 export const ProductsPageActions = createActionGroup({
     source: 'Products Page',
     events: {
