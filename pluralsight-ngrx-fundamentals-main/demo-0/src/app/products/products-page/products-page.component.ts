@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ProductsService } from '../products.service';
 import { Store } from '@ngrx/store';
 import { ProductsPageActions } from '../state/products.actions';
 import { selectProducts, selectProductsErrorMessage, selectProductsLoading, selectProductsShowProductCode, selectProductsTotal } from '../state/products.selectors';
