@@ -18,11 +18,14 @@ export class ProductEffects {
         this.actions$.pipe(
             ofType(ProductsPageActions.loadProducts),
             // exhaustMap operator is better for load effects.
-            exhaustMap(() =>
-                this.productService.getAll().pipe(
-                    map((products) => ProductsAPIActions.productsLoadedSuccess({ products })),
-                    catchError((error) => of(ProductsAPIActions.productsLoadedFail({ message: error })))
-                ),
+            exhaustMap(
+                () => {
+                    console.log("Log from effects.");
+                    return this.productService.getAll().pipe(
+                        map((products) => ProductsAPIActions.productsLoadedSuccess({ products })),
+                        catchError((error) => of(ProductsAPIActions.productsLoadedFail({ message: error })))
+                    )
+                }
             )
         )
     );
@@ -31,7 +34,7 @@ export class ProductEffects {
         this.actions$.pipe(
             ofType(ProductsPageActions.addProduct),
             // Will run subequent adds in parallel.
-            mergeMap(({product}) =>
+            mergeMap(({ product }) =>
                 this.productService.add(product).pipe(
                     map((newProduct) => ProductsAPIActions.productAddedSuccess({ product: newProduct })),
                     catchError((error) => of(ProductsAPIActions.productAddedFail({ message: error })))
@@ -43,7 +46,7 @@ export class ProductEffects {
     updateProduct$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ProductsPageActions.updateProduct),
-            concatMap(({product}) =>
+            concatMap(({ product }) =>
                 this.productService.update(product).pipe(
                     map(() => ProductsAPIActions.productUpdatedSuccess({ product })),
                     catchError((error) => of(ProductsAPIActions.productUpdatedFail({ message: error })))
@@ -55,7 +58,7 @@ export class ProductEffects {
     deleteProduct$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ProductsPageActions.deleteProduct),
-            mergeMap(({id}) =>
+            mergeMap(({ id }) =>
                 this.productService.delete(id).pipe(
                     map(() => ProductsAPIActions.productDeletedSuccess({ id })),
                     catchError((error) => of(ProductsAPIActions.productDeletedFail({ message: error })))
