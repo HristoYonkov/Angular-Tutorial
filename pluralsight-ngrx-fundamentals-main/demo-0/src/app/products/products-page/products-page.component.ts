@@ -23,9 +23,15 @@ export class ProductsPageComponent {
   ngOnInit() {
     this.store.dispatch(ProductsPageActions.loadProducts());
   }
-
+  
   toggleShowProductCode() {
-    // Dispatching process, phase 1
+    // Dispatching process, phase 1.
+    // When user clicks on the checkbox, then component creates an action
+    // and dispatches it to the reducer telling him to toggle, "Toggle Show Product Code" property.
+    // The reducer uses the action and the existing store state to create new state with
+    // the "showProductCode" property settin it to the true, then returns that new state
+    // to the store. The store broadcasts state changes to all subscribers.
+    // Which in this case is the only products component.
     this.store.dispatch(ProductsPageActions.toggleShowProductCode());
   }
 }
