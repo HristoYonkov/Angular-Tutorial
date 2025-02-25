@@ -3,11 +3,11 @@ import { Product } from "../product.model";
 
 // Following code is for strongly typed actions.
 
-// Dispatching process, phase 2
 export const ProductsPageActions = createActionGroup({
     source: 'Products Page',
     events: {
         'Toggle Show Product Code': emptyProps(),
+        // Dispatching process, phase 2
         'Load Products': emptyProps(),
         'Add Product': props<{product: Product}>(),
         'Update Product': props<{product: Product}>(),
