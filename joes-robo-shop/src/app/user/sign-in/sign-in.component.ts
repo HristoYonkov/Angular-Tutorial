@@ -19,7 +19,7 @@ export class SignInComponent {
   signIn() {
     this.signInError = false;
 
-    this.userService.signIn(this.credentials).subscribe( {
+    this.userService.signIn(this.credentials).subscribe({
       next: () => this.router.navigate(['/catalog']),
       error: () => (this.signInError = true)
     })
