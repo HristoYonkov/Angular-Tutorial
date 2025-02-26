@@ -23,14 +23,16 @@ export const productsReducer = createReducer(
         showProductCode: !state.showProductCode,
     })),
     // Dispatching process, phase 3. Actual actions are happend here.
-    on(ProductsPageActions.loadProducts, (state) => ({
+    on(ProductsPageActions.loadProducts, (state) => { 
+        console.log("Log from reducers load.");
+        return ({
         ...state,
         loading: true,
         products: [],
         errorMessage: '',
-    })),
+    })}),
     on(ProductsAPIActions.productsLoadedSuccess, (state, { products }) => {
-        console.log("Log from reducers.");
+        console.log("Log from reducers success.");
         return ({
             ...state,
             loading: false,
