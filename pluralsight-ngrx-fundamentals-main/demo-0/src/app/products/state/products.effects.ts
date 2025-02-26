@@ -13,12 +13,16 @@ export class ProductEffects {
     private productService: ProductsService
   ) { }
 
-  // We should be careful here cause Mapping Operators as its easy to cause race conditions if we don't understand how they work. Safes operator is concatMap. But is less performant.
+  // We should be careful here cause Mapping Operators as its easy to cause race 
+  // conditions if we don't understand how they work. Safes operator is concatMap.
+  // But is less performant.
   loadProducts$ = createEffect(() => {
     console.log("Log from effects load.");
     return this.actions$.pipe(
       ofType(ProductsPageActions.loadProducts),
-      // exhaustMap operator is better for load effects.
+      // exhaustMap operator is better for load effects, it will ignore all subsequent 
+      // subscriptions/requests until complete. Use when you don't want more requests
+      // until the initial one completes.
       exhaustMap(
         () => {
           console.log("Log from effects success.");
@@ -35,7 +39,8 @@ export class ProductEffects {
     console.log("Log from effects add product.");
     return this.actions$.pipe(
       ofType(ProductsPageActions.addProduct),
-      // Will run subequent adds in parallel.
+      // Will run subscriptions/requests in parallel, and cause possible race conditions.
+      // Use for get, put, post and delete methods when order is not important.
       mergeMap(({ product }) =>
         this.productService.add(product).pipe(
           map((newProduct) => ProductsAPIActions.productAddedSuccess({ product: newProduct })),
@@ -48,6 +53,7 @@ export class ProductEffects {
   updateProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductsPageActions.updateProduct),
+      // No race conditions with concatMap().
       concatMap(({ product }) =>
         this.productService.update(product).pipe(
           map(() => ProductsAPIActions.productUpdatedSuccess({ product })),
@@ -69,3 +75,6 @@ export class ProductEffects {
     )
   );
 }
+
+// switchMap() operator which is not presented "cancels the current subscription/request"
+// Use for get requests or cancelable requests like searches.
