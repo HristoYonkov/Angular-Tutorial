@@ -44,5 +44,37 @@ export const productsReducer = createReducer(
         errorMessage: message,
         loading: false,
         products: [],
+    })),
+    on(ProductsPageActions.addProduct, (state) => ({
+        ...state,
+        loading: true,
+        errorMessage: '',
+    })),
+    on(ProductsAPIActions.productAddedSuccess, (state, { product }) => ({
+        ...state,
+        loading: false,
+        products: [...state.products, product],
+    })),
+    on(ProductsAPIActions.productAddedFail, (state, { message }) => ({
+        ...state,
+        loading: false,
+        errorMessage: message,
+    })),
+    on(ProductsPageActions.updateProduct, (state) => ({
+        ...state,
+        loading: true,
+        errorMessage: '',
+    })),
+    on(ProductsAPIActions.productUpdatedSuccess, (state, { product }) => ({
+        ...state,
+        loading: false,
+        products: state.products.map((existingProduct) =>
+            existingProduct.id === product.id ? product : existingProduct
+        ),
+    })),
+    on(ProductsAPIActions.productUpdatedFail, (state, { message }) => ({
+        ...state,
+        loading: false,
+        errorMessage: message,
     }))
 );
