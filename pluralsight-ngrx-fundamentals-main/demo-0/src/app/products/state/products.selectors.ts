@@ -35,7 +35,7 @@ export const { selectRouteParams } = getRouterSelectors();
 export const selectProductById = createSelector(
   selectProducts,
   selectRouteParams,
-  // Here { id } is coming from destructuring it from selectRouteParams parameter in createSelector
-  (products, { id }) =>
-    products.find((product) => product.id === parseInt(id))
+  // Here { id } is coming from destructuring it from selectRouteParams 
+  // parameter in createSelector
+  (products, { id }) => products.find((product) => product.id === parseInt(id))
 );
