@@ -19,10 +19,10 @@ export class ProductsPageComponent {
     this.store.subscribe((store) => console.log(store));
   }
 
-  ngOnInit() {
-    // Dispatching process, phase 1.
-    this.store.dispatch(ProductsPageActions.loadProducts());
-  }
+  // ngOnInit() {
+  //   // Dispatching process, phase 1.
+  //   this.store.dispatch(ProductsPageActions.loadProducts());
+  // }
   
   toggleShowProductCode() {
     /* When user clicks on the checkbox, then component creates an action
