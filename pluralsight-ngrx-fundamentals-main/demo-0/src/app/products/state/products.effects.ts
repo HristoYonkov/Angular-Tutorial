@@ -7,6 +7,12 @@ import { catchError, concatMap, exhaustMap, map, mergeMap, of } from "rxjs";
 @Injectable()
 
 export class ProductEffects {
+  // When products module is loaded all effects are registered and "ngrxOnInitEffects()"
+  // will fire an action which will trigger the "loadProducts$"
+  // effect, which will update the state new products.
+  ngrxOnInitEffects() {
+    return ProductsPageActions.loadProducts();
+  }
 
   constructor(
     private actions$: Actions,
