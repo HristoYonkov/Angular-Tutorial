@@ -1,14 +1,19 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ProductsState } from "./products.reducer";
 import { sumProducts } from "src/app/utils/sum-products";
 import { getRouterSelectors } from "@ngrx/router-store";
+import * as fromProducts from './products.reducer'
 
 
-export const selectProductsState = createFeatureSelector<ProductsState>('products');
+export const selectProductsState = createFeatureSelector<fromProducts.ProductsState>('products');
 
 export const selectProducts = createSelector(
   selectProductsState,
-  (productsState) => productsState.products
+  fromProducts.selectProducts
+);
+
+export const selectProductsEntities = createSelector(
+  selectProductsState,
+  fromProducts.selectProductEntities
 );
 
 export const selectProductsLoading = createSelector(
@@ -33,9 +38,9 @@ export const selectProductsTotal = createSelector(selectProducts, sumProducts);
 export const { selectRouteParams } = getRouterSelectors();
 
 export const selectProductById = createSelector(
-  selectProducts,
+  selectProductsEntities,
   selectRouteParams,
   // Here { id } is coming from destructuring it from selectRouteParams 
   // parameter in createSelector
-  (products, { id }) => products.find((product) => product.id === parseInt(id))
+  (productEntities, { id }) => productEntities[id]
 );
