@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ProductsPageActions } from '../state/products.actions';
-import { selectProducts, selectProductsErrorMessage, selectProductsLoading, selectProductsShowProductCode, selectProductsTotal } from '../state/products.selectors';
+import {
+  selectProducts,
+  selectProductsErrorMessage,
+  selectProductsLoading,
+  selectProductsShowProductCode,
+  selectProductsTotal
+} from '../state/products.selectors';
 
 @Component({
   selector: 'app-products-page',
@@ -14,7 +20,7 @@ export class ProductsPageComponent {
   loading$ = this.store.select(selectProductsLoading);
   showProductCode$ = this.store.select(selectProductsShowProductCode);
   errorMessage$ = this.store.select(selectProductsErrorMessage);
-  
+
   constructor(private store: Store) {
     this.store.subscribe((store) => console.log(store));
   }
@@ -23,7 +29,7 @@ export class ProductsPageComponent {
   //   // Dispatching process, phase 1.
   //   this.store.dispatch(ProductsPageActions.loadProducts());
   // }
-  
+
   toggleShowProductCode() {
     /* When user clicks on the checkbox, then component creates an action
      and dispatches it to the reducer telling him to toggle, "Toggle Show Product Code" property.
