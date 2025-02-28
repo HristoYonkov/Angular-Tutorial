@@ -58,7 +58,9 @@ export class ProductEffects {
       // No race conditions with concatMap().
       concatMap(({ product }) =>
         this.productService.update(product).pipe(
-          map(() => ProductsAPIActions.productUpdatedSuccess({ product })),
+          map(() => ProductsAPIActions.productUpdatedSuccess({
+            update: { id: product.id, changes: product }
+          })),
           catchError((error) => of(ProductsAPIActions.productUpdatedFail({ message: error })))
         ),
       )
@@ -88,7 +90,7 @@ export class ProductEffects {
     ),
     { dispatch: false }
   );
-  
+
   constructor(
     private actions$: Actions,
     private productService: ProductsService,
