@@ -15,24 +15,6 @@ export class ProductEffects {
     return ProductsPageActions.loadProducts();
   }
 
-  constructor(
-    private actions$: Actions,
-    private productService: ProductsService,
-    private router: Router
-  ) { }
-
-  redirectToProductsPage = createEffect(
-    () => this.actions$.pipe(
-      ofType(
-        ProductsAPIActions.productAddedSuccess,
-        ProductsAPIActions.productUpdatedSuccess,
-        ProductsAPIActions.productDeletedSuccess,
-      ),
-      tap(() => this.router.navigate(['/products']))
-    ),
-    { dispatch: false }
-  );
-
   // We should be careful here cause Mapping Operators as its easy to cause race 
   // conditions if we don't understand how they work. Safes operator is concatMap.
   // But is less performant.
@@ -94,6 +76,24 @@ export class ProductEffects {
       )
     )
   );
+
+  redirectToProductsPage = createEffect(
+    () => this.actions$.pipe(
+      ofType(
+        ProductsAPIActions.productAddedSuccess,
+        ProductsAPIActions.productUpdatedSuccess,
+        ProductsAPIActions.productDeletedSuccess,
+      ),
+      tap(() => this.router.navigate(['/products']))
+    ),
+    { dispatch: false }
+  );
+  
+  constructor(
+    private actions$: Actions,
+    private productService: ProductsService,
+    private router: Router
+  ) { }
 }
 
 // switchMap() operator which is not presented "cancels the current subscription/request"
