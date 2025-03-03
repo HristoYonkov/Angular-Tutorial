@@ -6,6 +6,8 @@
     <section>
       <nav>Name/Info</nav>
       <div>
+        <!-- The magic is happening trought the "ControlValueAccessor" directive
+        when we use "[formControl]" dicervite with reactive forms. -->
         <input [formControl]="firstName" placeholder="First Name" />
         <input [formControl]="lastName" placeholder="Last Name" />
         <input [formControl]="dateOfBirth" placeholder="Date of Birth" />
