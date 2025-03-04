@@ -30,7 +30,8 @@ export class EditContactComponent implements OnInit {
       state: '',
       postalCode: '',
       addressType: '',
-    })
+    }),
+    notes: '',
   });
 
 
