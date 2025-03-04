@@ -17,7 +17,29 @@
         <input formControlName="firstName" placeholder="First Name" />
         <input formControlName="lastName" placeholder="Last Name" />
         <input formControlName="dateOfBirth" placeholder="Date of Birth" />
-        <input formControlName="favoritesRanking" placeholder="Favorites Ranking" />
+        <!-- If we don't pass the "number" value accessor, the deafult control accessor
+         for "formControlName" assigns the deafult controlValueAcessor that will always
+         return string value.  -->
+        <!-- <input formControlName="favoritesRanking" type="number" placeholder="Favorites Ranking" /> -->
+
+        <div>
+          <!-- In following example rangeValueAccessor is detecting the change and
+           updating the form controls value each time and saving it as a numeric value -->
+          <span>Favorites Ranking</span>
+          <input formControlName="favoritesRanking" type="range" min="0" max="5"
+            placeholder="Favorites Ranking"
+          />
+          <span>{{contactForm.controls.favoritesRanking.value}}</span>
+        </div>
+        <div>
+          <!-- Checkboxes works quite unique here: If we put a value like for example
+           "value="foo" it wont record a string. Cause of special controlValueAccessor directive
+           named "CheckboxControlValueAcessor" (check in docs for this).
+           It has been applied when we use "formControlName" directive
+           to out input element with type checkbox. -->
+          <input type="checkbox" formControlName="personal">
+          Personal
+        </div>
       </div>
     </section>
     <section>
