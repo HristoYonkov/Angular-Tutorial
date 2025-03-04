@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
+import { phoneTypeValues } from '../contacts/contact.model';
 
 @Component({
   templateUrl: './edit-contact.component.html',
   styleUrls: ['./edit-contact.component.css']
 })
 export class EditContactComponent implements OnInit {
+  phoneTypes = phoneTypeValues;
   // "".nonNullable" makes all property type set to not be null,
   // except explicitly typed ones like: dateOfBirth and favoritesRanking.
   contactForm = this.fb.nonNullable.group({
