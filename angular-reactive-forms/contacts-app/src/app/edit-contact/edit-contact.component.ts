@@ -33,6 +33,7 @@ export class EditContactComponent implements OnInit {
     this.contactsService.getContact(contactId).subscribe((contact) => {
       if (!contact) return;
 
+      // Following commented code is how to do it on individual way.
       // this.firstName.setValue(contact.firstName);
       // this.lastName.setValue(contact.lastName);
       // this.dateOfBirth.setValue(contact.dateOfBirth);
@@ -46,7 +47,12 @@ export class EditContactComponent implements OnInit {
   }
 
   saveContact() {
+    // Following commented code is how to do it on individual way.
     // console.log(this.firstName.value);
-    console.log(this.contactForm.controls.firstName.value);
+
+    // Following code is how to do it with FormGroup() way.
+    // console.log(this.contactForm.controls.firstName.value);
+    console.log(this.contactForm.value);
+    
   }
 }
