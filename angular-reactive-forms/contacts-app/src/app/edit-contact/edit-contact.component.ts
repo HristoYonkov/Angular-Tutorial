@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContactsService } from '../contacts/contacts.service';
 
@@ -8,30 +8,24 @@ import { ContactsService } from '../contacts/contacts.service';
   styleUrls: ['./edit-contact.component.css']
 })
 export class EditContactComponent implements OnInit {
-  // Following commented code is how to do it on individual way.
-  // firstName = new FormControl('Pavel');
-  // firstName = new FormControl();
-  // lastName = new FormControl();
-  // dateOfBirth = new FormControl();
-  // favoritesRanking = new FormControl();
-
-  // Following code is how to do it with FormGroup() way.
-  contactForm = new FormGroup({
-    id: new FormControl(),
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    dateOfBirth: new FormControl(),
-    favoritesRanking: new FormControl(),
-    phone: new FormGroup({
-      phoneNumber: new FormControl(),
-      phoneType: new FormControl(),
+  // "".nonNullable" makes all property type set to not be null,
+  // except explicitly typed ones like: dateOfBirth and favoritesRanking.
+  contactForm = this.fb.nonNullable.group({
+    id: '',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: <Date | null>null,
+    favoritesRanking: <number | null>null,
+    phone: this.fb.nonNullable.group({
+      phoneNumber: '',
+      phoneType: '',
     }),
-    address: new FormGroup({
-      streetAddress: new FormControl(),
-      city: new FormControl(),
-      state: new FormControl(),
-      postalCode: new FormControl(),
-      addressType: new FormControl(),
+    address: this.fb.nonNullable.group({
+      streetAddress: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      addressType: '',
     })
   });
 
@@ -39,7 +33,8 @@ export class EditContactComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private contactsService: ContactsService,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -49,39 +44,22 @@ export class EditContactComponent implements OnInit {
     this.contactsService.getContact(contactId).subscribe((contact) => {
       if (!contact) return;
 
-      // Following commented code is how to do it on individual way.
-      // this.firstName.setValue(contact.firstName);
-      // this.lastName.setValue(contact.lastName);
-      // this.dateOfBirth.setValue(contact.dateOfBirth);
-      // this.favoritesRanking.setValue(contact.favoritesRanking);
+      // Following approach remove all unnecessary code like example
+      // in "edit-contact.component-old".
+      this.contactForm.setValue(contact);
 
-      this.contactForm.controls.id.setValue(contact.id);
-      this.contactForm.controls.firstName.setValue(contact.firstName);
-      this.contactForm.controls.lastName.setValue(contact.lastName);
-      this.contactForm.controls.dateOfBirth.setValue(contact.dateOfBirth);
-      this.contactForm.controls.favoritesRanking.setValue(contact.favoritesRanking);
-      // Here is how we will make nested FormGroup for phone in our contactForm.
-      this.contactForm.controls.phone.controls.phoneNumber.setValue(contact.phone.phoneNumber);
-      this.contactForm.controls.phone.controls.phoneType.setValue(contact.phone.phoneType);
-      // Here is how we will make nested FormGroup for address in our contactForm.
-      this.contactForm.controls.address.controls.streetAddress.setValue(contact.address.streetAddress);
-      this.contactForm.controls.address.controls.city.setValue(contact.address.city);
-      this.contactForm.controls.address.controls.state.setValue(contact.address.state);
-      this.contactForm.controls.address.controls.postalCode.setValue(contact.address.postalCode);
-      this.contactForm.controls.address.controls.addressType.setValue(contact.address.addressType);
+      // Following code is when we don't want to inicialize all values in the
+      // fields in our form module, instead of that we want to initialize only
+      // "firstName" and "lastName".
+      // const names = {firstName: contact.firstName, lastName: contact.lastName}
+      // "patchValues()" allows you to set values on few properties on form model.
+      // this.contactForm.patchValue(names);
     })
   }
 
   saveContact() {
-    // Following commented code is how to do it on individual way.
-    // console.log(this.firstName.value);
-
-    // Following code is how to do it with FormGroup() way.
-    // console.log(this.contactForm.controls.firstName.value);
     console.log(this.contactForm.value);
-    // getRawValue() will always return all controlled form property
-    // values, even if the control is disabled.
-    // this.contactsService.saveContact(this.contactForm.value);
+    
     this.contactsService.saveContact(this.contactForm.getRawValue()).subscribe({
       next: () => this.router.navigate(['/contacts'])
     });
