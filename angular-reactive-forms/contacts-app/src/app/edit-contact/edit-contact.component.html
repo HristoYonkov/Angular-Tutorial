@@ -20,14 +20,16 @@
         <em *ngIf="firstName.errors?.['minlength'] && firstName.touched">First name must be at least 3 chars</em>
         <input formControlName="lastName" placeholder="Last Name" />
 
-        <input formControlName="dateOfBirth" type="date" placeholder="Date of Birth"
-          [value]="contactForm.controls.dateOfBirth.value | date:'yyyy-MM-dd'" />
+        <!-- <input formControlName="dateOfBirth" type="date" placeholder="Date of Birth"
+          [value]="contactForm.controls.dateOfBirth.value | date:'yyyy-MM-dd'" /> -->
+
+          <!-- A new way with custom controlValueAccessor -->
+          <input formControlName="dateOfBirth" type="date" placeholder="Date of Birth"/>
 
         <!-- If we don't pass the "number" value accessor, the deafult control accessor
          for "formControlName" assigns the deafult controlValueAcessor that will always
          return string value.  -->
         <!-- <input formControlName="favoritesRanking" type="number" placeholder="Favorites Ranking" /> -->
-
         <div>
           <!-- In following example rangeValueAccessor is detecting the change and
            updating the form controls value each time and saving it as a numeric value -->
