@@ -25,7 +25,7 @@ export class DateValueAccessorDirective implements ControlValueAccessor {
   // input event, so that we can update the FormControl's value, whenever user types anything
   // into the input element.
   registerOnChange(fn: Function) {
-    this.onChange = (valueAsDate: Date) => { fn(valueAsDate); }
+    this.onChange = (valueAsDate: Date) => { fn(valueAsDate); };
   }
 
   registerOnTouched(fn: Function) {
