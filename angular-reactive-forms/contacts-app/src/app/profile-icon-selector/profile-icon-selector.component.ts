@@ -1,7 +1,9 @@
 import { Component, forwardRef, Provider } from '@angular/core';
 import { profileIconNames } from './profile-icon-names';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
 // Following custom component is a "controllValueAccessor"
+// that means we can bind em to a formControl.
 const PROFILE_ICON_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => ProfileIconSelectorComponent),
