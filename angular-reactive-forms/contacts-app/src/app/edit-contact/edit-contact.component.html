@@ -8,7 +8,7 @@
     <section>
       <nav>Name/Info</nav>
       <div>
-        <con-profile-icon-selector />
+        <con-profile-icon-selector formControlName="icon" />
         <!-- The magic is happening trought the "ControlValueAccessor" directive
         when we use "[formControl]" dicervite with reactive forms. -->
         <!-- Following commented code is when we do it without FormGroup(),
@@ -24,8 +24,8 @@
         <!-- <input formControlName="dateOfBirth" type="date" placeholder="Date of Birth"
           [value]="contactForm.controls.dateOfBirth.value | date:'yyyy-MM-dd'" /> -->
 
-          <!-- A new way with custom controlValueAccessor -->
-          <input formControlName="dateOfBirth" type="date" placeholder="Date of Birth"/>
+        <!-- A new way with custom controlValueAccessor -->
+        <input formControlName="dateOfBirth" type="date" placeholder="Date of Birth" />
 
         <!-- If we don't pass the "number" value accessor, the deafult control accessor
          for "formControlName" assigns the deafult controlValueAcessor that will always
@@ -50,17 +50,20 @@
       </div>
     </section>
     <section>
-      <nav>Phone</nav>
-      <div formGroupName="phone" class="flex-column">
-        <div class="flex-group">
-          <input formControlName="phoneNumber" placeholder="Phone" />
-          <img src="/assets/plus-grey-blue.png" class="add" />
-        </div>
-        <div class="radio">
-          <span *ngFor="let phoneType of phoneTypes">
-            <input type="radio" formControlName="phoneType" [value]="phoneType.value">
-            {{phoneType.title}}
-          </span>
+      <nav>Phones</nav>
+      <!-- <div formGroupName="phone" class="flex-column"> -->
+      <div formArrayName="phones">
+        <div *ngFor="let i=index of contactForm.controls.phones.controls" [formGroupName]="i" class="flex-column">
+          <div class="flex-group">
+            <input formControlName="phoneNumber" placeholder="Phone" />
+            <img src="/assets/plus-grey-blue.png" class="add" (click)="addPhone()" />
+          </div>
+          <div class="radio">
+            <span *ngFor="let phoneType of phoneTypes">
+              <input type="radio" formControlName="phoneType" [value]="phoneType.value">
+              {{phoneType.title}}
+            </span>
+          </div>
         </div>
       </div>
     </section>
