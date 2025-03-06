@@ -16,6 +16,7 @@ export class EditContactComponent implements OnInit {
   // except explicitly typed ones like: dateOfBirth and favoritesRanking.
   contactForm = this.fb.nonNullable.group({
     id: '',
+    icon: '',
     personal: false,
     firstName: ['', [Validators.required, Validators.minLength(3)]], // or array of validators
     lastName: '',
