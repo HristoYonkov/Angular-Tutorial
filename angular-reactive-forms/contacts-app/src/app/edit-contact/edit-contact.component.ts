@@ -22,10 +22,7 @@ export class EditContactComponent implements OnInit {
     lastName: '',
     dateOfBirth: <Date | null>null,
     favoritesRanking: <number | null>null,
-    phone: this.fb.nonNullable.group({
-      phoneNumber: '',
-      phoneType: '',
-    }),
+    phones: this.fb.array([this.createPhoneGroup()]),
     address: this.fb.nonNullable.group({
       streetAddress: ['', Validators.required],
       city: ['', Validators.required],
@@ -51,6 +48,10 @@ export class EditContactComponent implements OnInit {
     this.contactsService.getContact(contactId).subscribe((contact) => {
       if (!contact) return;
 
+      for (let i = 1; i < contact.phones.length; i++) {
+        this.addPhone();
+      }
+
       // Following approach remove all unnecessary code like example
       // in "edit-contact.component-old".
       this.contactForm.setValue(contact);
@@ -62,6 +63,18 @@ export class EditContactComponent implements OnInit {
       // "patchValues()" allows you to set values on few properties on form model.
       // this.contactForm.patchValue(names);
     })
+  }
+
+  createPhoneGroup() {
+    return this.fb.nonNullable.group({
+      phoneNumber: '',
+      phoneType: '',
+    })
+  }
+
+  // With formArrays we can dynamicly add elements to a form.
+  addPhone() {
+    this.contactForm.controls.phones.push(this.createPhoneGroup());
   }
 
   get firstName() {
