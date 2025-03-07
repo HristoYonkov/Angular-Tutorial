@@ -44,14 +44,14 @@ export class EditContactComponent implements OnInit {
 
   ngOnInit() {
     const contactId = this.route.snapshot.params['id'];
-    if (!contactId) return;
+    if (!contactId)  {
+      // Set validations to new contact form also.
+      this.subscribeToAddressChanges();
+      return;
+    };
 
     this.contactsService.getContact(contactId).subscribe((contact) => {
-      if (!contact) {
-        // Set validations to new contact form also.
-        this.subscribeToAddressChanges();
-        return;
-      };
+      if (!contact) return;
 
       for (let i = 1; i < contact.phones.length; i++) {
         this.addPhone();
@@ -76,21 +76,21 @@ export class EditContactComponent implements OnInit {
   subscribeToAddressChanges() {
     const addressGroup = this.contactForm.controls.address;
     addressGroup.valueChanges
-      .pipe(distinctUntilChanged(this.stringifyCompare))
-      .subscribe(() => {
-        for (const controlName in addressGroup.controls) {
-          addressGroup.get(controlName)?.removeValidators([Validators.required]);
-          addressGroup.get(controlName)?.updateValueAndValidity();
-        }
-      });
+    .pipe(distinctUntilChanged(this.stringifyCompare))
+    .subscribe(() => {
+      for (const controlName in addressGroup.controls) {
+        addressGroup.get(controlName)?.removeValidators([Validators.required]);
+        addressGroup.get(controlName)?.updateValueAndValidity();
+      }
+    });
     addressGroup.valueChanges
-      .pipe(debounceTime(2000), distinctUntilChanged(this.stringifyCompare))
-      .subscribe(() => {
-        for (const controlName in addressGroup.controls) {
-          addressGroup.get(controlName)?.addValidators([Validators.required]);
-          addressGroup.get(controlName)?.updateValueAndValidity();
-        }
-      });
+    .pipe(debounceTime(2000), distinctUntilChanged(this.stringifyCompare))
+    .subscribe(() => {
+      for (const controlName in addressGroup.controls) {
+        addressGroup.get(controlName)?.addValidators([Validators.required]);
+        addressGroup.get(controlName)?.updateValueAndValidity();
+      }
+    });
   }
 
   stringifyCompare(a: any, b: any) {
@@ -107,14 +107,14 @@ export class EditContactComponent implements OnInit {
     // Subscribing to value changes on formControls.
     // On similar way we can subscribe to formGoups and formArrays.
     phoneGroup.controls.preferred.valueChanges
-      .pipe(distinctUntilChanged(this.stringifyCompare))
-      .subscribe(value => {
-        if (value)
-          phoneGroup.controls.phoneNumber.addValidators([Validators.required]);
-        else
-          phoneGroup.controls.phoneNumber.removeValidators([Validators.required]);
-        phoneGroup.controls.phoneNumber.updateValueAndValidity();
-      });
+    .pipe(distinctUntilChanged(this.stringifyCompare))
+    .subscribe(value => {
+      if (value)
+        phoneGroup.controls.phoneNumber.addValidators([Validators.required]);
+      else
+        phoneGroup.controls.phoneNumber.removeValidators([Validators.required]);
+      phoneGroup.controls.phoneNumber.updateValueAndValidity();
+    });
 
     return phoneGroup
   }
