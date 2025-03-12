@@ -1,0 +1,45 @@
+<div class="product">
+    <div class="product-details">
+        <!-- Example of attribute binding. This is one way binding (if data changed wont be updated)! -->
+        <img [src]="getImageUrl(product)" [alt]="product?.name" />
+        <div class="product-info">
+            <!-- Example of interpolation binding. -->
+            <div class="name">{{ product?.name }}</div>
+            <div class="description">{{ product?.description }}</div>
+            <div class="category">Part Type: {{ product?.category }}</div>
+        </div>
+    </div>
+    <div class="price">
+        @if (product.discount === 0) {
+        <!-- Pipe approach: In this example "currency" pipe handles the currency formatting, decimal point and etc..  -->
+        <!-- <div>{{ product?.price | currency:'GBP' }}</div> -->
+        }
+
+        <!-- Following example is css class binding -->
+        <!-- <div [class.striketrough]="product.discount > 0">
+            {{ product?.price | currency:'GBP' }}
+        </div> -->
+
+        <!-- Following example are dynamic css classes and styles, binding. -->
+        <!-- <div [ngClass]="{striketrough: product.discount > 0}">
+            {{ product?.price | currency:'GBP' }}
+        </div> -->
+
+        <div
+        style="font-weight: bolder;"
+        [ngStyle]="{color: product.discount > 0 ? 'green' : ''}"
+        [style.color]="product.discount > 0 ? 'red' : ''"
+        class="bold"
+        [ngClass]="getDiscountedClasses(product)"
+        >
+            {{ product?.price | currency:'GBP' }}
+        </div>
+
+        @if (product.discount > 0) {
+        <div class="discount">
+            ${{(product.price * (1 - product.discount)).toFixed(2)}}
+        </div>
+        }
+        <button class="cta" (click)="buyButtonClicked()">Buy</button>
+    </div>
+</div>

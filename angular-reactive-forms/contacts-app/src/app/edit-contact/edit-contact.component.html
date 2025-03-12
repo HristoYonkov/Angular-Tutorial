@@ -1,0 +1,108 @@
+<div class="content">
+  <h1 class="header">
+    Edit Contact
+  </h1>
+  <!-- we should remove "[formGroup]="contactForm"",
+  if we want to do it on individual way -->
+  <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
+    <section>
+      <nav>Name/Info</nav>
+      <div>
+        <con-profile-icon-selector formControlName="icon" />
+        <!-- The magic is happening trought the "ControlValueAccessor" directive
+        when we use "[formControl]" dicervite with reactive forms. -->
+        <!-- Following commented code is when we do it without FormGroup(),
+        but on individual way -->
+        <!-- <input [formControl]="firstName" placeholder="First Name" /> -->
+
+        <input formControlName="firstName" [class.error]="firstName.invalid && firstName.touched"
+          placeholder="First Name" />
+        <em *ngIf="firstName.errors?.['required'] && firstName.touched">Enter a first name</em>
+        <em *ngIf="firstName.errors?.['minlength'] && firstName.touched">First name must be at least 3 chars</em>
+        <input formControlName="lastName" placeholder="Last Name" />
+
+        <!-- <input formControlName="dateOfBirth" type="date" placeholder="Date of Birth"
+          [value]="contactForm.controls.dateOfBirth.value | date:'yyyy-MM-dd'" /> -->
+
+        <!-- A new way with custom controlValueAccessor -->
+        <input formControlName="dateOfBirth" type="date" placeholder="Date of Birth" />
+
+        <!-- If we don't pass the "number" value accessor, the deafult control accessor
+         for "formControlName" assigns the deafult controlValueAcessor that will always
+         return string value.  -->
+        <!-- <input formControlName="favoritesRanking" type="number" placeholder="Favorites Ranking" /> -->
+        <div>
+          <!-- In following example rangeValueAccessor is detecting the change and
+           updating the form controls value each time and saving it as a numeric value -->
+          <span>Favorites Ranking</span>
+          <input formControlName="favoritesRanking" type="range" min="0" max="5" placeholder="Favorites Ranking" />
+          <span>{{contactForm.controls.favoritesRanking.value}}</span>
+        </div>
+        <div>
+          <!-- Checkboxes works quite unique here: If we put a value like for example
+           "value="foo" it wont record a string. Cause of special controlValueAccessor directive
+           named "CheckboxControlValueAcessor" (check in docs for this).
+           It has been applied when we use "formControlName" directive
+           to out input element with type checkbox. -->
+          <input type="checkbox" formControlName="personal">
+          Personal
+        </div>
+      </div>
+    </section>
+    <section>
+      <nav>Phones</nav>
+      <!-- <div formGroupName="phone" class="flex-column"> -->
+      <div formArrayName="phones">
+        <div *ngFor="let phone of contactForm.controls.phones.controls; let i=index" [formGroupName]="i" class="flex-column">
+          <div class="flex-group">
+            <input formControlName="phoneNumber" placeholder="Phone" />
+            <img src="/assets/plus-grey-blue.png" class="add" (click)="addPhone()" />
+          </div>
+          <em *ngIf="phone.controls.phoneNumber.invalid">Preferred phone is required</em>
+          <div class="radio">
+            <span *ngFor="let phoneType of phoneTypes">
+              <input type="radio" formControlName="phoneType" [value]="phoneType.value">
+              {{phoneType.title}}
+            </span>
+          </div>
+          <span><input type="checkbox" formControlName="preferred" />Preferred</span>
+        </div>
+      </div>
+    </section>
+    <section>
+      <nav>Address</nav>
+      <div>
+        <div formGroupName="address" class="address"
+          [class.error]="contactForm.controls.address.invalid && contactForm.controls.address.dirty">
+          <div class="flex-group">
+            <input formControlName="streetAddress" placeholder="Address" />
+            <img src="/assets/plus-grey-blue.png" class="add" />
+          </div>
+          <input formControlName="city" placeholder="City" />
+          <input formControlName="state" placeholder="State/Region" />
+          <input formControlName="postalCode" placeholder="Zip/Postal Code" />
+          <select>
+            <option *ngFor="let addressType of addressTypes" [value]="addressType.value">
+              {{addressType.title}}
+            </option>
+          </select>
+        </div>
+        <!-- Validating entire form group. -->
+        <em *ngIf="contactForm.controls.address.invalid && contactForm.controls.address.dirty">
+          Incomplete address
+        </em>
+      </div>
+    </section>
+    <section>
+      <nav>Notes</nav>
+      <div>
+        <textarea placeholder="Notes" rows="5" formControlName="notes" [class.error]="notes.invalid"></textarea>
+        <em *ngIf="notes.errors?.['restrictedWords']">Restricted words found: {{notes.errors?.['restrictedWords']}}</em>
+      </div>
+    </section>
+    <div class="buttons">
+      <button class="secondary">Cancel</button>
+      <button type="submit" class="primary" [disabled]="contactForm.invalid">Save</button>
+    </div>
+  </form>
+</div>

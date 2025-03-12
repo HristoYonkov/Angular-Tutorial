@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 200px;
+}
+
+.filters .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    padding: 12px 0px;
+    border-radius: 4px;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(92, 173, 209);
+}
+a.active {
+    border-bottom: 4px solid rgb(210, 92, 160);
+}
+
+.products {
+    margin: 0 100px;
+    border-top: 2px solid #999;
+    padding: unset;
+}
+
+.product-item {
+    border-bottom: 2px solid #999;
+    list-style-type: none;
+}
+
+/* Product Details */
